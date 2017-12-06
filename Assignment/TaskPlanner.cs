@@ -14,6 +14,7 @@ namespace Assignment
         public double time_difference;
         public DateTime beforeDateTime;
         public DateTime afterDateTime;
+
         public double SetWorkdayStartAndStop(TimeSpan startTime, TimeSpan stopTime)
         {
             TimeSpan TimeD;
@@ -29,15 +30,28 @@ namespace Assignment
 
         public DateTime GetTaskFinishingDate(DateTime start, double hours)
         {
+           
             //  Console.WriteLine("The Date time: " + start);
             //Console.WriteLine("The start time: " + startTime);
 
             TimeSpan hourMinute;
             TimeSpan interval;
-            beforeDateTime = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, start.Second);
             int h = start.Hour; int m = start.Minute;
-
             hourMinute = new TimeSpan(h, m, 0);  //15:07
+            beforeDateTime = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, start.Second);
+
+            
+            if(hourMinute.CompareTo(startTime) < 0 || hourMinute.CompareTo(stopTime) > 0)
+            {
+                DateTime a = new DateTime(start.Year, start.Month, start.Day, 8, 0, 0);
+                start = a;
+                Console.WriteLine(start);
+                //   Console.WriteLine(hourMinute.CompareTo(startTime));
+                //  Console.WriteLine(hourMinute.CompareTo(stopTime));
+                   Console.ReadKey();
+
+            }
+
 
             int addingDays = (int)hours / (int)time_difference; //days that added 
             double addingHours = hours % time_difference; //hours that added

@@ -27,15 +27,12 @@ namespace Assignment
             double workDayHours = taskPlanner.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
             
             //Can be get the day
-            DateTime dateTime = new DateTime(2017, 4, 12, 15, 7, 0);
+            DateTime dateTime = new DateTime(2017, 12, 4, 22, 0, 0);
             //Console.WriteLine(dateTime);
             //Console.ReadKey();
 
-            taskPlanner.addHolidays();
-            Console.WriteLine(taskPlanner.GetTaskFinishingDate(dateTime,workDayHours));
-            Console.ReadKey();
-
-           
+            Console.WriteLine(taskPlanner.GetTaskFinishingDate(dateTime, 0.25 * workDayHours));
+            //Console.ReadKey();
 
         }
     }
