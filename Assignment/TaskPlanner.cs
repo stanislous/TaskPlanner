@@ -1,4 +1,5 @@
 ﻿using System;
+using Nager.Date;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,7 +59,7 @@ namespace Assignment
                 DateTime a = new DateTime(start.Year, start.Month, start.Day, 8, 0, 0);
                 start = a;
             }
-
+            
 
             int addingDays = (int)hours / (int)time_difference; //days that added 
             double addingHours = hours % time_difference; //hours that added
@@ -68,7 +69,7 @@ namespace Assignment
             {
                 start = start.AddHours(24 - time_difference);
             }
-
+            
             // Console.WriteLine("Adding Days : " + addingDays);
             // Console.WriteLine("Adding Hours: " + addingHours);
             // Console.WriteLine("Start: " + start);
@@ -102,21 +103,27 @@ namespace Assignment
 
         public DateTime addHolidays(DateTime beforeDateTime, DateTime afterDateTime)
         {
+            CountryCode a = new CountryCode();
+            
             DateTime newDate = afterDateTime;
           //  Console.WriteLine("newDate: "+newDate);
           //  Console.ReadKey();
-            while (beforeDateTime.Day != afterDateTime.Day)
-            {
-                if (beforeDateTime.DayOfWeek == DayOfWeek.Sunday || beforeDateTime.DayOfWeek == DayOfWeek.Saturday)
+            if(afterDateTime.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    newDate = newDate.AddDays(1);
-                    Console.WriteLine("Skipped");
-                    
+                    afterDateTime = afterDateTime.AddDays(1);
+                }   
+                while (beforeDateTime.Day != afterDateTime.Day)
+                {
+                    if (beforeDateTime.DayOfWeek == DayOfWeek.Sunday || beforeDateTime.DayOfWeek == DayOfWeek.Saturday /*|| DateSystem.IsPublicHoliday(beforeDateTime, )*/)
+                    {
+                        newDate = newDate.AddDays(1);
+                        //Console.WriteLine("Skipped");
+                    }
+                    beforeDateTime = beforeDateTime.AddDays(1);
                 }
-                beforeDateTime = beforeDateTime.AddDays(1);
+                Console.WriteLine();
+                Console.ReadKey();
+                return newDate;
             }
-            Console.ReadKey();
-            return newDate;
         }
     }
-}

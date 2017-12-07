@@ -31,7 +31,7 @@ namespace Assignment
             //Console.WriteLine(dateTime);
             //Console.ReadKey();
 
-            Console.WriteLine(taskPlanner.GetTaskFinishingDate(dateTime, 5.25 * workDayHours));
+            Console.WriteLine(taskPlanner.GetTaskFinishingDate(dateTime, 25.25 * workDayHours));
             //Console.ReadKey();
         }
     }
