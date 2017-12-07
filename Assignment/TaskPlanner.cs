@@ -108,11 +108,10 @@ namespace Assignment
             DateTime newDate = afterDateTime;
           //  Console.WriteLine("newDate: "+newDate);
           //  Console.ReadKey();
-            if(afterDateTime.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    afterDateTime = afterDateTime.AddDays(1);
-                }   
-                while (beforeDateTime.Day != afterDateTime.Day)
+            if(afterDateTime.DayOfWeek == DayOfWeek.Sunday) { afterDateTime = afterDateTime.AddDays(1); }
+            if (afterDateTime.DayOfWeek == DayOfWeek.Saturday) { afterDateTime = afterDateTime.AddDays(2); }
+
+            while (beforeDateTime.Day != afterDateTime.Day)
                 {
                     if (beforeDateTime.DayOfWeek == DayOfWeek.Sunday || beforeDateTime.DayOfWeek == DayOfWeek.Saturday /*|| DateSystem.IsPublicHoliday(beforeDateTime, )*/)
                     {
