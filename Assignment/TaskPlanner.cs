@@ -91,23 +91,24 @@ namespace Assignment
         public DateTime addHolidays(DateTime beforeDateTime, DateTime afterDateTime)
         {
             CountryCode a = new CountryCode();
-            a = CountryCode.US;
+            a = CountryCode.NO;
             DateTime newDate = afterDateTime;
            
             if (afterDateTime.DayOfWeek == DayOfWeek.Sunday) { afterDateTime = afterDateTime.AddDays(1); }
             if (afterDateTime.DayOfWeek == DayOfWeek.Saturday) { afterDateTime = afterDateTime.AddDays(2); }
+            if (DateSystem.IsPublicHoliday(afterDateTime, a)) { afterDateTime = afterDateTime.AddDays(1); }
 
             while (beforeDateTime.Day != afterDateTime.Day)
             {
-                Console.WriteLine(DateSystem.IsPublicHoliday(beforeDateTime, a));
+                
                 if (beforeDateTime.DayOfWeek == DayOfWeek.Sunday || beforeDateTime.DayOfWeek == DayOfWeek.Saturday || DateSystem.IsPublicHoliday(beforeDateTime, a))
                 {
-                     
-                     newDate = newDate.AddDays(1);   
+                    //Console.WriteLine(beforeDateTime);
+                    newDate = newDate.AddDays(1);   
                 }
                 beforeDateTime = beforeDateTime.AddDays(1);
             }
-            Console.ReadKey();
+            //Console.ReadKey();
             return newDate;
         }
         public DateTime isHoliday(DateTime beforeDateTime)
