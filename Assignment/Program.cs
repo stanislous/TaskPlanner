@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assignment
 {  
     class Program
     {
-
-        
         static void Main(string[] args)
         {
             TaskPlanner taskPlanner = new TaskPlanner();
-
 
             //Set time Span to get Work hours
             TimeSpan workdayStartTime = new TimeSpan(8, 0, 0);
@@ -27,12 +20,10 @@ namespace Assignment
             double workDayHours = taskPlanner.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
             
             //Can be get the day
-            DateTime dateTime = new DateTime(2017, 11, 30, 15, 7, 0);
-            //Console.WriteLine(dateTime);
-            //Console.ReadKey();
+            DateTime dateTime = new DateTime(2017, 12, 22, 15, 7, 0);
 
-            Console.WriteLine(taskPlanner.GetTaskFinishingDate(dateTime, 25.25 * workDayHours));
-            //Console.ReadKey();
+            Console.WriteLine(taskPlanner.GetTaskFinishingDate(dateTime, 0.25 * workDayHours));
+            Console.ReadKey();
         }
     }
 }
