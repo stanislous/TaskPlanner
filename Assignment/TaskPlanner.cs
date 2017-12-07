@@ -30,7 +30,7 @@ namespace Assignment
 
         public DateTime GetTaskFinishingDate(DateTime start, double hours)
         {
-           
+
             //  Console.WriteLine("The Date time: " + start);
             //Console.WriteLine("The start time: " + startTime);
 
@@ -40,16 +40,21 @@ namespace Assignment
             hourMinute = new TimeSpan(h, m, 0);  //15:07
             beforeDateTime = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, start.Second);
 
-            
-            if(hourMinute.CompareTo(startTime) < 0 || hourMinute.CompareTo(stopTime) > 0)
+
+            if (hourMinute.CompareTo(stopTime) > 0)  //if order comes at night
             {
                 DateTime a = new DateTime(start.Year, start.Month, start.Day, 8, 0, 0);
                 start = a;
-                Console.WriteLine(start);
+                start = start.AddDays(1);
+                //Console.WriteLine(start);
                 //   Console.WriteLine(hourMinute.CompareTo(startTime));
                 //  Console.WriteLine(hourMinute.CompareTo(stopTime));
-                   Console.ReadKey();
+                // Console.ReadKey();
 
+            } else if (hourMinute.CompareTo(startTime) < 0)  //if order comes at early morning
+            {
+                DateTime a = new DateTime(start.Year, start.Month, start.Day, 8, 0, 0);
+                start = a;
             }
 
 
@@ -92,9 +97,7 @@ namespace Assignment
 
         public void addHolidays()
         {
-            Console.WriteLine(beforeDateTime);
-            Console.WriteLine(afterDateTime);
-            Console.ReadKey();
+            
         }
     }
 }
