@@ -12,8 +12,7 @@ namespace Assignment
         private TimeSpan startTime;
         private TimeSpan stopTime;
         public double time_difference;
-        public DateTime beforeDateTime;
-        public DateTime afterDateTime;
+        
 
         public double SetWorkdayStartAndStop(TimeSpan startTime, TimeSpan stopTime)
         {
@@ -36,7 +35,10 @@ namespace Assignment
 
             TimeSpan hourMinute;
             TimeSpan interval;
-            int h = start.Hour; int m = start.Minute;
+            DateTime beforeDateTime;
+            DateTime afterDateTime;
+
+        int h = start.Hour; int m = start.Minute;
             hourMinute = new TimeSpan(h, m, 0);  //15:07
             beforeDateTime = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, start.Second);
 
@@ -47,9 +49,9 @@ namespace Assignment
                 start = a;
                 start = start.AddDays(1);
                 //Console.WriteLine(start);
-                //   Console.WriteLine(hourMinute.CompareTo(startTime));
-                //  Console.WriteLine(hourMinute.CompareTo(stopTime));
-                // Console.ReadKey();
+                //Console.WriteLine(hourMinute.CompareTo(startTime));
+                //Console.WriteLine(hourMinute.CompareTo(stopTime));
+                //Console.ReadKey();
 
             } else if (hourMinute.CompareTo(startTime) < 0)  //if order comes at early morning
             {
@@ -68,13 +70,16 @@ namespace Assignment
             }
 
             // Console.WriteLine("Adding Days : " + addingDays);
-            //  Console.WriteLine("Adding Hours: " + addingHours);
-            //  Console.WriteLine("Start: " + start);
-            //  Console.ReadKey();
+            // Console.WriteLine("Adding Hours: " + addingHours);
+            // Console.WriteLine("Start: " + start);
+            // Console.ReadKey();
 
             start = start.AddDays(addingDays);
             start = start.AddHours(addingHours);
             afterDateTime = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, start.Second);//2017, 4, 12, 15, 7, 0
+           // Console.WriteLine("Before Holidays added: " + start);
+            start = addHolidays(beforeDateTime, afterDateTime);
+            //Console.WriteLine("After Holidays added: " + start); 
             return start;
 
         }
@@ -95,9 +100,23 @@ namespace Assignment
         private TimeSpan getWorkdayStartTime() { return startTime; }
         private TimeSpan getWorkdayStopTime() { return stopTime; }
 
-        public void addHolidays()
+        public DateTime addHolidays(DateTime beforeDateTime, DateTime afterDateTime)
         {
-            
+            DateTime newDate = afterDateTime;
+          //  Console.WriteLine("newDate: "+newDate);
+          //  Console.ReadKey();
+            while (beforeDateTime.Day != afterDateTime.Day)
+            {
+                if (beforeDateTime.DayOfWeek == DayOfWeek.Sunday || beforeDateTime.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    newDate = newDate.AddDays(1);
+                    Console.WriteLine("Skipped");
+                    
+                }
+                beforeDateTime = beforeDateTime.AddDays(1);
+            }
+            Console.ReadKey();
+            return newDate;
         }
     }
 }
