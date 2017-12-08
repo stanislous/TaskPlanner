@@ -9,7 +9,6 @@ namespace Assignment
         private TimeSpan stopTime;
         public double time_difference;
         public int i = 0;
-
         public double SetWorkdayStartAndStop(TimeSpan startTime, TimeSpan stopTime)
         {
             TimeSpan TimeD;
@@ -20,7 +19,6 @@ namespace Assignment
 
             return timeDiffernce;
         }
-
         public DateTime GetTaskFinishingDate(DateTime start, double hours)
         {
             TimeSpan hourMinute;
@@ -34,7 +32,6 @@ namespace Assignment
             hourMinute = new TimeSpan(h, m, 0);  //15:07
             beforeDateTime = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, start.Second);
 
-          
             start = isHoliday(beforeDateTime);
             beforeDateTime = start;
 
@@ -75,9 +72,7 @@ namespace Assignment
             start = start.AddDays(addingDays);
             start = start.AddHours(addingHours);
             afterDateTime = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, start.Second);//2017, 4, 12, 15, 7, 0
-            // Console.WriteLine("Before Holidays added: " + start);
-            start = addHolidays(beforeDateTime, afterDateTime);
-            //Console.WriteLine("After Holidays added: " + start); 
+            start = addHolidays(beforeDateTime, afterDateTime); 
             return start;
         }
 
@@ -91,7 +86,7 @@ namespace Assignment
         public DateTime addHolidays(DateTime beforeDateTime, DateTime afterDateTime)
         {
             CountryCode a = new CountryCode();
-            a = CountryCode.NO;
+            a = CountryCode.US;
             DateTime newDate = afterDateTime;
            
             if (afterDateTime.DayOfWeek == DayOfWeek.Sunday) { afterDateTime = afterDateTime.AddDays(1); }
@@ -100,15 +95,12 @@ namespace Assignment
 
             while (beforeDateTime.Day != afterDateTime.Day)
             {
-                
                 if (beforeDateTime.DayOfWeek == DayOfWeek.Sunday || beforeDateTime.DayOfWeek == DayOfWeek.Saturday || DateSystem.IsPublicHoliday(beforeDateTime, a))
-                {
-                    //Console.WriteLine(beforeDateTime);
+                {  
                     newDate = newDate.AddDays(1);   
                 }
                 beforeDateTime = beforeDateTime.AddDays(1);
             }
-            //Console.ReadKey();
             return newDate;
         }
         public DateTime isHoliday(DateTime beforeDateTime)
@@ -125,8 +117,11 @@ namespace Assignment
                 beforeDateTime = a;
                 i++;
             }
-
             return beforeDateTime;
+        }
+        public void isPublicHoliday()
+        {
+
         }
     }
 }
