@@ -15,11 +15,11 @@ namespace Assignment
 
             double timeDiffernce = (double)TimeD.TotalHours;
             time_difference = timeDiffernce;
-            
+
             return timeDiffernce;
         }
         public DateTime GetTaskFinishingDate(DateTime start, double hours)
-        { 
+        {
             TimeSpan interval;
             int h = start.Hour;
             int m = start.Minute;
@@ -90,12 +90,17 @@ namespace Assignment
                     {
                         start = start.AddDays(2);
                     }
-                  /*  else if (addHolidays(start) == 3 || addHolidays(start) == 1)
+                    else if (addHolidays(start) == 1)
                     {
-                        start = start.AddDays(1);
-                    }*/
+                          start = start.AddDays(1);
+                    }
+                    if(addingDays == 0)
+                    {
+                        if (addHolidays(start) == 1) start = start.AddDays(1);
+                        if (addHolidays(start) == 2) start = start.AddDays(2);
+                    }
                 }
-                
+               
                 start = start.AddHours(addingHours);
                 start = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, 0);
             }
@@ -121,8 +126,8 @@ namespace Assignment
 
         public int addHolidays(DateTime day)
         {
-            if (day.DayOfWeek == DayOfWeek.Sunday || addSelectedHolidays(day,day.Year) == 1) { return 1; }
-            else if(day.DayOfWeek == DayOfWeek.Saturday) { return 2; }
+            if (day.DayOfWeek == DayOfWeek.Sunday || addSelectedHolidays(day, day.Year) == 1) { return 1; }
+            else if (day.DayOfWeek == DayOfWeek.Saturday) { return 2; }
             return 0;
         }
         public int addSelectedHolidays(DateTime date, int year)
@@ -135,8 +140,8 @@ namespace Assignment
             else return 0;
         }
                           /////////////////////////////////////////////
- //////////////////////////----------------For Minus-------------------///////////////////////////
-                          /////////////////////////////////////////////
+//////////////////////////----------------For Minus-------------------///////////////////////////
+                        //////////////////////////////////////////////
 
         public DateTime GetTaskFinishingDateForMinus(DateTime start, double hours)
         {
@@ -145,7 +150,7 @@ namespace Assignment
             int m = start.Minute;
             hourMinute = new TimeSpan(h, m, 0);  //15:07
 
-            if (addHolidaysForMinus(start) == 1 )
+            if (addHolidaysForMinus(start) == 1)
             {
                 start = start.AddDays(-1);
                 start = codeRedundencyForMinus(start);
@@ -164,7 +169,7 @@ namespace Assignment
             //if order comes at early morning
             else if (hourMinute.CompareTo(startTime) < 0)
             {
-                start = new DateTime(start.Year, start.Month, start.Day-1, 16, 0, 0);
+                start = new DateTime(start.Year, start.Month, start.Day - 1, 16, 0, 0);
             }
 
             int substractingDays = (int)hours / (int)time_difference; //days that added 
@@ -172,8 +177,7 @@ namespace Assignment
             interval = TimeSpan.FromHours(hours);
 
 
-            if (substractingDays == -1 && substractingHours == 0)
-            { //if order at 16 and finished at 8
+            if (substractingDays == -1 && substractingHours == 0) { //if order at 16 and finished at 8
                 substractingDays = 0;
                 substractingHours = -time_difference;
             }
@@ -187,32 +191,37 @@ namespace Assignment
             {
                 start = start.AddDays(-1);
                 start = new DateTime(start.Year, start.Month, start.Day, 16, 0, 0);
-                interval = interval + (hourMinute - startTime) ;
+                interval = interval + (hourMinute - startTime);
                 substractingHours = interval.TotalHours;
                 if (start.DayOfWeek == DayOfWeek.Sunday && substractingDays == 0) start = start.AddDays(-2);
                 if (start.DayOfWeek == DayOfWeek.Saturday && substractingDays == 0) start = start.AddDays(-1);
                 if (addHolidaysForMinus(start) == 1) start = start.AddDays(-1);
             }
 
-            // start = start.AddDays(addingDays);
-            
-            while (substractingDays != 0)
+
+            while(substractingDays != 0)
             {
                 if (addHolidaysForMinus(start) == 0)
                 {
-                    start = start.AddDays(-1); 
+                    start = start.AddDays(-1);
                     substractingDays++;
                 }
                 else if (addHolidaysForMinus(start) == 2)
                 {
                     start = start.AddDays(-2);
                 }
-                else if (addHolidaysForMinus(start) == 3 || addHolidaysForMinus(start) == 1)
+                else if (addHolidaysForMinus(start) == 1)
                 {
                     start = start.AddDays(-1);
                 }
+                if (substractingDays == 0)
+                {
+                    if (addHolidaysForMinus(start) == 1) start = start.AddDays(-1);
+                    if (addHolidaysForMinus(start) == 2) start = start.AddDays(-2);
+                }
+
             }
-            if(addSelectedHolidays(start,start.Year) == 1) start = start.AddDays(-1);
+
             start = start.AddHours(substractingHours);
             start = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, 0);
             return start;
@@ -230,6 +239,12 @@ namespace Assignment
             int m = stopTime.Minutes;
             TimeSpan hourM = new TimeSpan(h, m, 0);
             hourMinute = hourM;
+            return start;
+        }
+        public DateTime checkHoliday(DateTime start)
+        {
+
+            
             return start;
         }
     }

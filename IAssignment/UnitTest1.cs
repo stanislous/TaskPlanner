@@ -156,8 +156,19 @@ namespace AssigmentTest
 
             Assert.AreEqual(expected, result);
         }
-        
-        
+        [Test]
+        public void AddWrkingHours_StopAtAHoliday_ReturnDateAndTime()
+        {
+            var workDayHours = _sut.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
+            var expected = new DateTime(2004, 5, 31, 12, 0, 0);
+            var dateTime = new DateTime(2004, 5, 21, 8, 0, 0);
+
+            var result = _sut.GetTaskFinishingDate(dateTime, 5.5 * workDayHours);
+
+            Assert.AreEqual(expected, result);
+        }
+
+
         ////------------------For Minus Cases---------------------////
         [Test]
         public void SubstractWrkingHours_WithoutHolidaysAndPoyaDays_ReturnDateAndTime()
@@ -207,7 +218,7 @@ namespace AssigmentTest
         public void SubstractWrkingHours_WithHolidays_ReturnDateAndTime()
         {
             var workDayHours = _sut.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
-            var expected = new DateTime(2017, 12, 1, 15, 3, 0);
+            var expected = new DateTime(2017, 12, 1, 15, 7, 0);
             var dateTime = new DateTime(2017, 12, 4, 9, 7, 0);
 
             var result = _sut.GetTaskFinishingDate(dateTime, -0.25 * workDayHours);
@@ -266,6 +277,17 @@ namespace AssigmentTest
             var dateTime = new DateTime(2004, 5, 24, 18, 3, 0);
 
             var result = _sut.GetTaskFinishingDate(dateTime, -5.5 * workDayHours);
+
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void SubstractWrkingHours_SampleTestCase2_ReturnDateAndTime()
+        {
+            var workDayHours = _sut.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
+            var expected = new DateTime(2004, 5, 13, 10, 1, 0);
+            var dateTime = new DateTime(2004, 5, 24, 18, 3, 0);
+
+            var result = _sut.GetTaskFinishingDate(dateTime, -6.7470217 * workDayHours);
 
             Assert.AreEqual(expected, result);
         }
