@@ -18,11 +18,11 @@ namespace Assignment
 
             //Return Work day Hours
             double workDayHours = taskPlanner.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
-            
-            //Can be get the day
-            DateTime dateTime = new DateTime(2017, 12, 22, 15, 7, 0);
 
-            Console.WriteLine(taskPlanner.GetTaskFinishingDate(dateTime, 0.25 * workDayHours));
+            //Can be get the day
+            DateTime dateTime = new DateTime(2017, 12, 4, 9, 7, 0);
+
+            Console.WriteLine("For Minus :" + taskPlanner.GetTaskFinishingDate(dateTime, -0.25 * workDayHours));
             Console.ReadKey();
         }
     }
