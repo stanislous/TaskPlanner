@@ -2,7 +2,7 @@
 
 namespace Assignment
 {  
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -11,7 +11,7 @@ namespace Assignment
             //Set time Span to get Work hours
             TimeSpan workdayStartTime = new TimeSpan(8, 0, 0);
             TimeSpan workdayStopTime = new TimeSpan(16, 0, 0);
-            
+           
             //send start time and end times to the TaskPlanner
             taskPlanner.setWorkdayStartTime(workdayStartTime);
             taskPlanner.setWorkdayStopTime(workdayStopTime);
