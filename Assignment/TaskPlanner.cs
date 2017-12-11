@@ -90,11 +90,12 @@ namespace Assignment
                     {
                         start = start.AddDays(2);
                     }
-                    else if (addHolidays(start) == 3 || addHolidays(start) == 1)
+                  /*  else if (addHolidays(start) == 3 || addHolidays(start) == 1)
                     {
                         start = start.AddDays(1);
-                    }
+                    }*/
                 }
+                
                 start = start.AddHours(addingHours);
                 start = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, 0);
             }
@@ -120,11 +121,11 @@ namespace Assignment
 
         public int addHolidays(DateTime day)
         {
-            if (day.DayOfWeek == DayOfWeek.Sunday/* || addSelectedHolidays(day,day.Year) == 1*/) { return 1; }
+            if (day.DayOfWeek == DayOfWeek.Sunday || addSelectedHolidays(day,day.Year) == 1) { return 1; }
             else if(day.DayOfWeek == DayOfWeek.Saturday) { return 2; }
             return 0;
         }
-    /*    public int addSelectedHolidays(DateTime date, int year)
+        public int addSelectedHolidays(DateTime date, int year)
         {
             DateTime Recurent = new DateTime(2004, 5, 17);
             DateTime Normal = new DateTime(2004, 5, 27);
@@ -132,7 +133,7 @@ namespace Assignment
             // && Recurent.Month == date.Month && Recurent.Day == date.Day || Normal.Year == date.Year && Normal.Month == date.Month && Normal.Day == date.Day
             if (Recurent.ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy") || Normal.ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy") || Xmas.ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy")) return 1;
             else return 0;
-        }*/
+        }
                           /////////////////////////////////////////////
  //////////////////////////----------------For Minus-------------------///////////////////////////
                           /////////////////////////////////////////////
@@ -147,12 +148,12 @@ namespace Assignment
             if (addHolidaysForMinus(start) == 1 )
             {
                 start = start.AddDays(-1);
-                start = codeRedundency(start);
+                start = codeRedundencyForMinus(start);
             }
             else if (addHolidaysForMinus(start) == 2)
             {
                 start = start.AddDays(-2);
-                start = codeRedundency(start);
+                start = codeRedundencyForMinus(start);
             }
 
             //if order comes at night
@@ -179,18 +180,14 @@ namespace Assignment
 
             if (h > stopTime.Hours || h < startTime.Hours)
             {
-                hourMinute = new TimeSpan(startTime.Hours, startTime.Minutes, 0);
+                hourMinute = new TimeSpan(stopTime.Hours, stopTime.Minutes, 0);
             }
 
-            Console.WriteLine("hourMinute.Hours: " + hourMinute.Hours);
-            Console.WriteLine("substractingHours:" + substractingHours);
-            Console.WriteLine("hourMinute.Hours - substractingHours:" + (hourMinute.Hours - substractingHours));
-            Console.ReadKey();
             if ((hourMinute.Hours + substractingHours).CompareTo(startTime.Hours) < 0)
             {
                 start = start.AddDays(-1);
                 start = new DateTime(start.Year, start.Month, start.Day, 16, 0, 0);
-                interval = interval - (stopTime - hourMinute);
+                interval = interval + (hourMinute - startTime) ;
                 substractingHours = interval.TotalHours;
                 if (start.DayOfWeek == DayOfWeek.Sunday && substractingDays == 0) start = start.AddDays(-2);
                 if (start.DayOfWeek == DayOfWeek.Saturday && substractingDays == 0) start = start.AddDays(-1);
@@ -198,12 +195,13 @@ namespace Assignment
             }
 
             // start = start.AddDays(addingDays);
+            
             while (substractingDays != 0)
             {
                 if (addHolidaysForMinus(start) == 0)
                 {
-                    start = start.AddDays(-1);
-                    substractingDays--;
+                    start = start.AddDays(-1); 
+                    substractingDays++;
                 }
                 else if (addHolidaysForMinus(start) == 2)
                 {
@@ -214,15 +212,25 @@ namespace Assignment
                     start = start.AddDays(-1);
                 }
             }
+            if(addSelectedHolidays(start,start.Year) == 1) start = start.AddDays(-1);
             start = start.AddHours(substractingHours);
             start = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, 0);
             return start;
         }
         public int addHolidaysForMinus(DateTime day)
         {
-            if (day.DayOfWeek == DayOfWeek.Saturday /*|| addSelectedHolidays(day, day.Year) == 1*/) { return 1; }
+            if (day.DayOfWeek == DayOfWeek.Saturday || addSelectedHolidays(day, day.Year) == 1) { return 1; }
             else if (day.DayOfWeek == DayOfWeek.Sunday) { return 2; }
             return 0;
+        }
+        public DateTime codeRedundencyForMinus(DateTime start)
+        {
+            start = new DateTime(start.Year, start.Month, start.Day, 16, 0, 0);
+            int h = stopTime.Hours;
+            int m = stopTime.Minutes;
+            TimeSpan hourM = new TimeSpan(h, m, 0);
+            hourMinute = hourM;
+            return start;
         }
     }
 }

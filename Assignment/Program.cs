@@ -20,9 +20,9 @@ namespace Assignment
             double workDayHours = taskPlanner.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
 
             //Can be get the day
-            DateTime dateTime = new DateTime(2017, 12, 4, 9, 7, 0);
+            DateTime dateTime = new DateTime(2004, 5, 24, 18, 3, 0);
 
-            Console.WriteLine("For Minus :" + taskPlanner.GetTaskFinishingDate(dateTime, -0.25 * workDayHours));
+            Console.WriteLine("For Minus :" + taskPlanner.GetTaskFinishingDate(dateTime, -5.5 * workDayHours));
             Console.ReadKey();
         }
     }
