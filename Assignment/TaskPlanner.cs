@@ -79,7 +79,7 @@ namespace Assignment
                 }
 
                 // start = start.AddDays(addingDays);
-                while (addingDays != 0)
+                while (addingDays != 0 || currentDate(start) == 1)
                 {
                     if (addHolidays(start) == 0)
                     {
@@ -94,17 +94,16 @@ namespace Assignment
                     {
                           start = start.AddDays(1);
                     }
-                    if(addingDays == 0)
-                    {
-                        if (addHolidays(start) == 1) start = start.AddDays(1);
-                        if (addHolidays(start) == 2) start = start.AddDays(2);
-                    }
-                }
-               
+                }               
                 start = start.AddHours(addingHours);
                 start = new DateTime(start.Year, start.Month, start.Day, start.Hour, start.Minute, 0);
             }
             return start;
+        }
+        public int currentDate(DateTime start)
+        {
+            if (start.DayOfWeek == DayOfWeek.Sunday || addSelectedHolidays(start, start.Year) == 1 || start.DayOfWeek == DayOfWeek.Saturday) { return 1; }
+            else return 0;
         }
 
         public DateTime codeRedundency(DateTime start)
@@ -176,7 +175,6 @@ namespace Assignment
             double substractingHours = hours % time_difference; //hours that added 
             interval = TimeSpan.FromHours(hours);
 
-
             if (substractingDays == -1 && substractingHours == 0) { //if order at 16 and finished at 8
                 substractingDays = 0;
                 substractingHours = -time_difference;
@@ -198,8 +196,7 @@ namespace Assignment
                 if (addHolidaysForMinus(start) == 1) start = start.AddDays(-1);
             }
 
-
-            while(substractingDays != 0)
+            while (substractingDays != 0 || currentDate(start) == 1)
             {
                 if (addHolidaysForMinus(start) == 0)
                 {
@@ -214,12 +211,6 @@ namespace Assignment
                 {
                     start = start.AddDays(-1);
                 }
-                if (substractingDays == 0)
-                {
-                    if (addHolidaysForMinus(start) == 1) start = start.AddDays(-1);
-                    if (addHolidaysForMinus(start) == 2) start = start.AddDays(-2);
-                }
-
             }
 
             start = start.AddHours(substractingHours);
@@ -241,28 +232,5 @@ namespace Assignment
             hourMinute = hourM;
             return start;
         }
-        public DateTime checkHoliday(DateTime start)
-        {
-
-            
-            return start;
-        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-/*
-Console.WriteLine();
-Console.ReadKey();
-
- //   CountryCode a = new CountryCode();
-             //   a = CountryCode.US;
-*/

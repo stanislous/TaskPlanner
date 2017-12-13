@@ -157,7 +157,7 @@ namespace AssigmentTest
             Assert.AreEqual(expected, result);
         }
         [Test]
-        public void AddWrkingHours_StopAtAHoliday_ReturnDateAndTime()
+        public void AddWrkingHours_StopAtAHoliday_ReturnDateAndTimeAfterTheHoliday()
         {
             var workDayHours = _sut.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
             var expected = new DateTime(2004, 5, 31, 12, 0, 0);
@@ -251,7 +251,7 @@ namespace AssigmentTest
         public void SubstractWrkingHours_OrderIAHoliday_ReturnDateAndTime()
         {
             var workDayHours = _sut.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
-            var expected = new DateTime(2017, 12, 24, 14, 0, 0);
+            var expected = new DateTime(2017, 12, 22, 14, 0, 0);
             var dateTime = new DateTime(2017, 12, 25, 15, 7, 0);
 
             var result = _sut.GetTaskFinishingDate(dateTime, -0.25 * workDayHours);
@@ -260,9 +260,10 @@ namespace AssigmentTest
         }
         [Test]
         public void SubstractWrkingHours_OrderAfterHoliday_ReturnDateAndTime()
+
         {
             var workDayHours = _sut.SetWorkdayStartAndStop(workdayStartTime, workdayStopTime);
-            var expected = new DateTime(2017, 12, 24, 15, 7, 0);
+            var expected = new DateTime(2017, 12, 22, 15, 7, 0);
             var dateTime = new DateTime(2017, 12, 26, 9, 7, 0);
 
             var result = _sut.GetTaskFinishingDate(dateTime, -0.25 * workDayHours);
